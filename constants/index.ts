@@ -1,5 +1,12 @@
-export const ESCROW_ADDRESS = "0xa162f00b430d15a0c229FB30b3937C80DEcB9eBa";
-export const USDC_ADDRESS = "0x3600000000000000000000000000000000000000";
+export const FACTORY_ADDRESS = "0x77B609Cb54c17f56166c5E963b1FF7896800D7bA";
+export const USDC_ADDRESS   = "0x3600000000000000000000000000000000000000";
+
+export const FACTORY_ABI = [
+  "function createEscrow(address seller, address arbiter, uint256 amount) external returns (address)",
+  "function getEscrowsForParty(address party) view returns (address[])",
+  "function totalEscrows() view returns (uint256)",
+  "event EscrowCreated(address indexed escrow, address indexed buyer, address indexed seller, address arbiter, uint256 amount)",
+];
 
 export const ESCROW_ABI = [
   "function state() view returns (uint8)",
@@ -27,7 +34,7 @@ export const STATE_LABELS: Record<number, string> = {
   4: "Refunded",
 };
 
-export const ARC_CHAIN_ID = "0x45C";  // 1116 in hex
+export const ARC_CHAIN_ID = "0x45C";
 
 export const ARC_TESTNET = {
   chainId: ARC_CHAIN_ID,
