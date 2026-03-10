@@ -49,6 +49,16 @@ export async function switchToArc() {
   }
 }
 
+async function ensureArcNetwork() {
+  if (!window.ethereum) return;
+  const chainId = await window.ethereum.request({ method: "eth_chainId" });
+  if (chainId.toLowerCase() !== ARC_CHAIN_ID.toLowerCase()) {
+    await switchToArc();
+    // Small delay to let MetaMask finish switching
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  }
+}
+
 export async function getProvider() {
   if (!window.ethereum) throw new Error("MetaMask not found. Please install it at metamask.io");
   return new BrowserProvider(window.ethereum);
@@ -83,6 +93,7 @@ export async function createEscrow(
   amount: string,
   onStatus: (msg: string) => void
 ): Promise<string> {
+  await ensureArcNetwork();
   const provider = await getProvider();
   const signer = await provider.getSigner();
   const factory = new Contract(FACTORY_ADDRESS, FACTORY_ABI, signer);
@@ -134,11 +145,13 @@ export async function getEscrowState(escrowAddress: string): Promise<EscrowInfo>
   };
 }
 
+
 export async function approveAndDeposit(
   escrowAddress: string,
   amount: string,
   onStatus: (msg: string) => void
 ) {
+  await ensureArcNetwork();
   const provider = await getProvider();
   const signer = await provider.getSigner();
   const usdc = new Contract(USDC_ADDRESS, USDC_ABI, signer);
@@ -158,6 +171,7 @@ export async function confirmDelivery(
   escrowAddress: string,
   onStatus: (msg: string) => void
 ) {
+  await ensureArcNetwork();
   const provider = await getProvider();
   const signer = await provider.getSigner();
   const escrow = new Contract(escrowAddress, ESCROW_ABI, signer);
@@ -171,6 +185,7 @@ export async function raiseDispute(
   escrowAddress: string,
   onStatus: (msg: string) => void
 ) {
+  await ensureArcNetwork();
   const provider = await getProvider();
   const signer = await provider.getSigner();
   const escrow = new Contract(escrowAddress, ESCROW_ABI, signer);
@@ -184,6 +199,7 @@ export async function refundBuyer(
   escrowAddress: string,
   onStatus: (msg: string) => void
 ) {
+  await ensureArcNetwork();
   const provider = await getProvider();
   const signer = await provider.getSigner();
   const escrow = new Contract(escrowAddress, ESCROW_ABI, signer);
