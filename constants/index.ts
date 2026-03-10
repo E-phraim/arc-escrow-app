@@ -38,7 +38,7 @@ export const ARC_CHAIN_ID = "0x4D0312";
 
 export const ARC_TESTNET = {
   chainId: "0x4D0312",
-  chainName: "Arc Testnet",
+  chainName: "Arc Testnet 2",
   rpcUrls: ["https://rpc.testnet.arc.network"],
   nativeCurrency: { name: "USDC", symbol: "USDC", decimals: 18 },
   blockExplorerUrls: ["https://testnet.arcscan.app"],
