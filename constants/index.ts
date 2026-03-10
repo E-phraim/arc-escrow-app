@@ -34,10 +34,10 @@ export const STATE_LABELS: Record<number, string> = {
   4: "Refunded",
 };
 
-export const ARC_CHAIN_ID = "0x45C";
+export const ARC_CHAIN_ID = "0x4D0312";
 
 export const ARC_TESTNET = {
-  chainId: ARC_CHAIN_ID,
+  chainId: "0x4D0312",
   chainName: "Arc Testnet",
   rpcUrls: ["https://rpc.testnet.arc.network"],
   nativeCurrency: { name: "USDC", symbol: "USDC", decimals: 18 },
