@@ -160,7 +160,14 @@ export default function Home() {
     try {
       resetTx();
       const { address, chainId: cid } = await connectWallet();
-      setWallet(address); setChainId(cid);
+      setWallet(address);
+      // Force switch to Arc immediately if on wrong network
+      if (cid.toLowerCase() !== ARC_CHAIN_ID.toLowerCase()) {
+        await switchToArc();
+        setChainId(ARC_CHAIN_ID);
+      } else {
+        setChainId(cid);
+      }
       setView("dashboard");
     } catch (e: any) { setTxMsg(parseError(e)); setTxState("error"); }
   }

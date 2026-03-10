@@ -66,6 +66,8 @@ export async function connectWallet(): Promise<{ address: string; chainId: strin
   }
   const provider = new BrowserProvider(window.ethereum);
   const accounts = await provider.send("eth_requestAccounts", []);
+  // Always switch to Arc on connect
+  await switchToArc();
   const network = await provider.getNetwork();
   return {
     address: accounts[0].toLowerCase(),
